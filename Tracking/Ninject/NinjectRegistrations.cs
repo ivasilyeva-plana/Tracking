@@ -17,6 +17,7 @@ namespace Tracking.Ninject
         public override void Load()
         {
             Bind<IDataManager>().To<DataManager>();
+            Bind<ICoder>().To<Coder>();
             switch (_command)
             {
                 case Models.Commands.Add:

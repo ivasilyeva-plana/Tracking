@@ -13,7 +13,7 @@ namespace Tracking.Models
     {
         private const byte MinArgsLength = 3;
         private const string KeyPointer = "-k";
-        private const string KeyValue = "12345";
+        private const int KeyValue = 12345;
 
         private static readonly IList<CommandSpecification> CommandSpecificationList = 
             new List<CommandSpecification>()
@@ -25,9 +25,9 @@ namespace Tracking.Models
             };
         public Commands CommandValue { get; }
         public string[] Parameters { get;  }
-        public string Key { get; }
+        public int Key { get; }
 
-        public InputData(Commands action, string[] parameters, string key)
+        public InputData(Commands action, string[] parameters, int key)
         {
             CommandValue = action;
             Parameters = parameters;
@@ -56,17 +56,16 @@ namespace Tracking.Models
             if (args.Length != MinArgsLength + parametersNumber || !string.Equals(args[args.Length - 2], KeyPointer))
                 throw new Exception(message);
 
-            if (!string.Equals(args[args.Length - 1], KeyValue))
-                throw new Exception(
-                    "Password is incorrect");
-
+            if (!int.TryParse(args[args.Length - 1], out var inputKey) || inputKey!=KeyValue)
+                throw new Exception("Password is incorrect");
+            
             var parameters = new string[parametersNumber];
             for (var i = 0; i < parametersNumber; i++)
             {
                 parameters[i] = args[i + 1];
             }
 
-            return new InputData(command, parameters, args[args.Length-1]);
+            return new InputData(command, parameters, inputKey);
         }
 
         

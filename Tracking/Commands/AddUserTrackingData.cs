@@ -17,15 +17,18 @@ namespace Tracking.Commands
         const string StopFillData = ":q";
         const string StopFillTracking = ":t";
         private readonly IDataManager _dataManager;
+        private readonly ICoder _coder;
 
-        public AddUserTrackingData(IDataManager dataManager)
+
+        public AddUserTrackingData(IDataManager dataManager, ICoder coder)
         {
             _dataManager = dataManager;
+            _coder = coder;
         }
 
         public void ExecuteCommand(InputData inputData)
         {
-            var users = InputDataReading();
+            var users = InputDataReading(inputData);
 
             _dataManager.WriteToFile<UserModel>(Settings.Default.UsersFilePath, users);
 
@@ -37,7 +40,7 @@ namespace Tracking.Commands
             _dataManager.WriteToFile<TrackingModel>(Settings.Default.TrackingFilePath, trackingPixels);
         }
 
-        private List<UserModel> InputDataReading()
+        private List<UserModel> InputDataReading(InputData inputData)
         {
             var users = new List<UserModel>();
             var maxId = 0;
@@ -58,8 +61,8 @@ namespace Tracking.Commands
                 var person = new UserModel
                 {
                     Id = maxId,
-                    FirstName = personData[0],
-                    LastName = personData[1],
+                    FirstName = _coder.Encrypt(personData[0], inputData.Key),
+                    LastName = _coder.Encrypt(personData[1], inputData.Key),
                     Age = age,
                     TrackingPixels = new List<TrackingModel>()
                 };
