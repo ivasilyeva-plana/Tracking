@@ -43,15 +43,13 @@ namespace Tracking.Models
                           $" Command [Parameters]  -  command name. Command name list: {string.Join(", ", availableActions)};{Environment.NewLine}" +
                           "  -k KeyValue  -  password;";
 
-            if (args.Length != MinArgsLength) throw new Exception(message);
+            if (args.Length < MinArgsLength) throw new Exception(message);
 
-           if (!Enum.TryParse<Commands>(args[0], true, out _))
+           if (!Enum.TryParse<Commands>(args[0], true, out Commands command))
                 throw new Exception(
-                    $"{args[1]} - invalid command. Command list: {string.Join(", ", availableActions)}");
+                    $"{args[0]} - invalid command. Command list: {string.Join(", ", availableActions)}");
 
-            Enum.TryParse(args[0], out Commands command);
-
-            var parametersNumber = CommandSpecificationList
+           var parametersNumber = CommandSpecificationList
                 .Where(i => i.Command == command)
                 .Select(i => i.ParametersNumber).FirstOrDefault();
 

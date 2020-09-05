@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Ninject.Modules;
 using Tracking.Commands;
+using Tracking.Managers;
 
 namespace Tracking.Ninject
 {
@@ -15,6 +16,7 @@ namespace Tracking.Ninject
         public NinjectRegistrations(Models.Commands command) => _command = command;
         public override void Load()
         {
+            Bind<IDataManager>().To<DataManager>();
             switch (_command)
             {
                 case Models.Commands.Add:

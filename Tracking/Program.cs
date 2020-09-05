@@ -29,13 +29,13 @@ namespace Tracking
             var registrations = new NinjectRegistrations(inputData.CommandValue);
             var kernel = new StandardKernel(registrations);
 
-            var task = StartOperationAsync(inputData,  kernel);
+            StartOperation(inputData,  kernel);
         }
 
-        private static async Task StartOperationAsync(InputData inputData, IKernel kernel)
+        private static void StartOperation(InputData inputData, IKernel kernel)
         {
             var query = kernel.Get<ICommand>();
-            await query.ExecuteCommandAsync(inputData);
+            query.ExecuteCommand(inputData);
         }
     }
 }

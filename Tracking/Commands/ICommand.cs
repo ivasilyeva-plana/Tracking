@@ -9,6 +9,6 @@ namespace Tracking.Commands
 {
     public interface ICommand
     {
-        Task ExecuteCommandAsync(InputData inputData);
+        void ExecuteCommand(InputData inputData);
     }
 }

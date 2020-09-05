@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Tracking.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="UsersFilePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Files\Users.db</Value>
+    </Setting>
+    <Setting Name="TrackingFilePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Files\Tracking.db</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
