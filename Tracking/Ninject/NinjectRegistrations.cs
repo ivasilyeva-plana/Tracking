@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Ninject.Modules;
+﻿using Ninject.Modules;
+using System;
 using Tracking.Commands;
-using Tracking.Managers;
+using Tracking.DataProvider;
 
 namespace Tracking.Ninject
 {
@@ -16,18 +12,21 @@ namespace Tracking.Ninject
         public NinjectRegistrations(Models.Commands command) => _command = command;
         public override void Load()
         {
-            Bind<IDataManager>().To<DataManager>();
+            Bind<IDataProvider>().To<DataProvider.DataProvider>();
             Bind<ICoder>().To<Coder>();
+            Bind<IDataReader>().To<DataReader>();
+            Bind<IPresenter>().To<Presenter>();
+
             switch (_command)
             {
                 case Models.Commands.Add:
                     Bind<ICommand>().To<AddUserTrackingData>();
                     break;
                 case Models.Commands.Read:
-                    Bind<ICommand>().To<ReadUserTrackingData>();
+                    Bind<ICommand>().To<PrintAllUsersTrackingData>();
                     break;
                 case Models.Commands.Find:
-                    Bind<ICommand>().To<FindUserTrackingData>();
+                    Bind<ICommand>().To<PrintUserTrackingData>();
                     break;
                 default:
                     throw new Exception("Command is not recognized");

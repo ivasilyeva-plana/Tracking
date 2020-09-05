@@ -1,20 +1,31 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
 
-namespace Tracking.Managers
+namespace Tracking.DataProvider
 {
-    public class DataManager : IDataManager
+    public class DataProvider : IDataProvider
     {
+        private int _key;
+        private readonly ICoder _coder;
+
+        public DataProvider(ICoder coder)
+        {
+            _coder = coder;
+        }
+
+        public IDataProvider WithSecurityKey(int key)
+        {
+            _key = key;
+            return this;
+        }
+
         public List<T> ReadFromFile<T>(string filePath)
         {
             try
             {
-                return JsonConvert.DeserializeObject<List<T>>(File.ReadAllText(filePath));
+                return JsonConvert.DeserializeObject<List<T>>(_coder.Decrypt(File.ReadAllText(filePath),_key));
             }
             catch (Exception ex)
             {
@@ -28,7 +39,9 @@ namespace Tracking.Managers
         {
             try
             {
-                File.WriteAllText(filePath, JsonConvert.SerializeObject(list));
+                var y = JsonConvert.SerializeObject(list);
+                var x = _coder.Encrypt(JsonConvert.SerializeObject(list), _key);
+                File.WriteAllText(filePath, _coder.Encrypt(JsonConvert.SerializeObject(list),_key));
             }
             catch (Exception ex)
             {

@@ -65,13 +65,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\AddUserTrackingData.cs" />
-    <Compile Include="Commands\FindUserTrackingData.cs" />
+    <Compile Include="Commands\PrintUserTrackingData.cs" />
     <Compile Include="Commands\ICommand.cs" />
-    <Compile Include="Commands\ReadUserTrackingData.cs" />
-    <Compile Include="Managers\Coder.cs" />
-    <Compile Include="Managers\DataManager.cs" />
-    <Compile Include="Managers\ICoder.cs" />
-    <Compile Include="Managers\IDataManager.cs" />
+    <Compile Include="Commands\PrintAllUsersTrackingData.cs" />
+    <Compile Include="DataProvider\Coder.cs" />
+    <Compile Include="DataProvider\DataProvider.cs" />
+    <Compile Include="DataProvider\DataReader.cs" />
+    <Compile Include="DataProvider\ICoder.cs" />
+    <Compile Include="DataProvider\IDataProvider.cs" />
+    <Compile Include="DataProvider\IDataReader.cs" />
+    <Compile Include="DataProvider\IPresenter.cs" />
+    <Compile Include="DataProvider\Presenter.cs" />
     <Compile Include="Models\Commands.cs" />
     <Compile Include="Models\CommandSpecification.cs" />
     <Compile Include="Models\InputData.cs" />
